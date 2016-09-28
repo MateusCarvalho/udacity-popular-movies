@@ -1,5 +1,7 @@
 package com.mateus.popularmovies.main.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -7,16 +9,34 @@ import java.util.Date;
  */
 public class Movie {
 
+    @SerializedName("id")
+    private String id;
+    @SerializedName("title")
     private String title;
+    @SerializedName("overview")
     private String description;
+    @SerializedName("vote_average")
+    private Double voteAverage;
+    @SerializedName("release_date")
     private Date dateRelease;
-    private int averageUser;
+    @SerializedName("poster_path")
+    private String pathThumb;
 
-    public Movie (String title, String description, Date date, int average) {
+    public Movie(String id, String title, String description, Double voteAverage, Date dateRelease, String pathThumb) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.dateRelease = date;
-        this.averageUser = average;
+        this.voteAverage = voteAverage;
+        this.dateRelease = dateRelease;
+        this.pathThumb = pathThumb;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -35,6 +55,14 @@ public class Movie {
         this.description = description;
     }
 
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
     public Date getDateRelease() {
         return dateRelease;
     }
@@ -43,11 +71,11 @@ public class Movie {
         this.dateRelease = dateRelease;
     }
 
-    public int getAverageUser() {
-        return averageUser;
+    public String getPathThumb() {
+        return pathThumb;
     }
 
-    public void setAverageUser(int averageUser) {
-        this.averageUser = averageUser;
+    public void setPathThumb(String pathThumb) {
+        this.pathThumb = pathThumb;
     }
 }
