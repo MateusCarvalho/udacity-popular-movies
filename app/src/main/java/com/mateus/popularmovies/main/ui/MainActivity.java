@@ -37,6 +37,7 @@ public class MainActivity extends MasterActivity {
         setSupportActionBar(toolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.listMovies);
+
     }
 
     @Override

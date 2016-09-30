@@ -1,7 +1,9 @@
 package com.mateus.popularmovies.main.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,25 +11,34 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mateus.popularmovies.R;
 import com.mateus.popularmovies.main.model.Movie;
+import com.mateus.popularmovies.main.ui.MovieDetailActivity;
 import com.mateus.popularmovies.main.utils.Constants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by mateus on 27/09/16.
  */
-public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.ViewHolder> {
+public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.ViewHolder> implements View.OnClickListener {
 
-    private List<Movie> listItens;
+    private static List<Movie> listItens;
     private Context mCtx;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onClick(View v) {
+
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public ImageView thumb;
         public ProgressBar progressBar;
@@ -36,6 +47,28 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
             progressBar = (ProgressBar) view.findViewById(R.id.progressImage);
             title = (TextView) view.findViewById(R.id.titleMovie);
             thumb = (ImageView) view.findViewById(R.id.thumb);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            int itemPosition = getAdapterPosition();
+            Movie temp = listItens.get(itemPosition);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(temp.getDateRelease());
+
+            String yearMovie = String.valueOf(calendar.get(Calendar.YEAR));
+
+            Intent i = new Intent(mCtx, MovieDetailActivity.class);
+            i.putExtra(Constants.MOVIE_TITLE,temp.getTitle());
+            i.putExtra(Constants.MOVIE_OVERVIEW,temp.getDescription());
+            i.putExtra(Constants.MOVIE_IMAGE_PATH,temp.getPathThumb());
+            i.putExtra(Constants.MOVIE_DATE_RELEASED,yearMovie);
+            i.putExtra(Constants.MOVIE_AVERAGE_USER,Double.toString(temp.getVoteAverage()));
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mCtx.startActivity(i);
         }
     }
 
