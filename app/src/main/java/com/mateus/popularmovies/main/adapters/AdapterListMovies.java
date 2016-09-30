@@ -7,25 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mateus.popularmovies.R;
 import com.mateus.popularmovies.main.model.Movie;
+import com.mateus.popularmovies.main.utils.Constants;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mateus on 27/09/16.
  */
 public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.ViewHolder> {
 
-    private ArrayList<Movie> listItens;
+    private List<Movie> listItens;
+    private Context mCtx;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public ImageView thumb;
+        public ProgressBar progressBar;
         public ViewHolder(View view) {
             super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressImage);
             title = (TextView) view.findViewById(R.id.titleMovie);
             thumb = (ImageView) view.findViewById(R.id.thumb);
         }
@@ -33,8 +41,9 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
 
 
     //create the constructor and force pass the data
-    public AdapterListMovies(ArrayList<Movie> listItens) {
+    public AdapterListMovies(List<Movie> listItens,Context ctx) {
         this.listItens = listItens;
+        this.mCtx = ctx;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,8 +60,24 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        //get item
         Movie item = listItens.get(position);
+
+        //set data to view
+        holder.title.setText(item.getTitle());
+        //get image
+        Picasso.with(mCtx).load(Constants.API_BASE_IMAGES_MOVIEDB+item.getPathThumb()).into(holder.thumb, new Callback() {
+            @Override
+            public void onSuccess() {
+                holder.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                holder.progressBar.setVisibility(View.GONE);
+            }
+        });
 
     }
 
@@ -60,6 +85,22 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
     @Override
     public int getItemCount() {
         return listItens.size();
+    }
+
+    public void clearData() {
+        int size = this.listItens.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                this.listItens.remove(0);
+            }
+
+            this.notifyItemRangeRemoved(0, size);
+        }
+    }
+
+    public void setData(List<Movie> data) {
+        this.listItens = data;
+        this.notifyDataSetChanged();
     }
 
 }

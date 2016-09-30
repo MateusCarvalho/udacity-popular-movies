@@ -2,7 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@android:color/white"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/progressImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/thumb"
@@ -13,14 +20,11 @@
 
 
     <TextView
+        android:padding="10dp"
         android:id="@+id/titleMovie"
         android:textSize="20sp"
         android:text="Title here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="Date released"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>
