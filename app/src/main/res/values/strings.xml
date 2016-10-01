@@ -2,4 +2,18 @@
     <string name="app_name">PopularMovies</string>
     <string name="action_settings">Settings</string>
 
+    <!--PREFERENCES-->
+    <string name="pref_order_label">Order Configuration</string>
+    <string name="pref_order_key">order</string>
+    <string name="pref_order_default">popular</string>
+
+    <string-array name="pref_order_values">
+        <item>Popular</item>
+        <item>Rating</item>
+    </string-array>
+
+    <string-array name="pref_order_options">
+        <item>popular</item>
+        <item>rating</item>
+    </string-array>
 </resources>

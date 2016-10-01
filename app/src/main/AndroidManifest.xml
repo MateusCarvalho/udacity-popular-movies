@@ -26,6 +26,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.ui.MainActivity" />
         </activity>
+        <activity android:name=".main.ui.SettingsActivity"
+            android:parentActivityName=".main.ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.ui.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

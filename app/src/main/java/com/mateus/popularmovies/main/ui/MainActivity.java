@@ -1,7 +1,9 @@
 package com.mateus.popularmovies.main.ui;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,10 +46,13 @@ public class MainActivity extends MasterActivity {
     protected void onStart() {
         super.onStart();
 
-        new FetchDataMovie().execute();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String order = sharedPreferences.getString(getString(R.string.pref_order_key),getString(R.string.pref_order_default));
+
+        new FetchDataMovie().execute(order);
     }
 
-    private class FetchDataMovie extends AsyncTask<Void,Void,List<Movie>>{
+    private class FetchDataMovie extends AsyncTask<String,Void,List<Movie>>{
 
         private String dataResponse;
 
@@ -57,9 +62,15 @@ public class MainActivity extends MasterActivity {
         }
 
         @Override
-        protected List<Movie> doInBackground(Void... params) {
+        protected List<Movie> doInBackground(String... params) {
             APIMovieDB apiMovieDb = ClientMovieDB.getInstance().create(APIMovieDB.class);
-            Call<MovieResponse> query = apiMovieDb.getPopularMovies(Constants.APP_ID_MOVIEDB,Constants.DEFAULT_LANGUAGE_MOVIEDB,"1");
+            Call<MovieResponse> query = null;
+
+            if (params[0].equals(getString(R.string.pref_order_default))) {
+              query  = apiMovieDb.getPopularMovies(Constants.APP_ID_MOVIEDB, Constants.DEFAULT_LANGUAGE_MOVIEDB, "1");
+            } else {
+                query = apiMovieDb.getTopRatedMovies(Constants.APP_ID_MOVIEDB, Constants.DEFAULT_LANGUAGE_MOVIEDB, "1");
+            }
             try {
                 Response<MovieResponse> response = query.execute();
                 mItens = response.body().results;

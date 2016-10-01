@@ -20,5 +20,12 @@ public interface APIMovieDB {
         @Query("page") String qtd
     );
 
+    @GET("top_rated")
+    Call<MovieResponse> getTopRatedMovies(
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("page") String qtd
+    );
+
 
 }

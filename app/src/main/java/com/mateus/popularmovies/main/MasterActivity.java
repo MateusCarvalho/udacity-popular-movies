@@ -1,5 +1,6 @@
 package com.mateus.popularmovies.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mateus.popularmovies.R;
+import com.mateus.popularmovies.main.ui.SettingsActivity;
 
 /**
  * Created by mateus on 27/09/16.
@@ -34,7 +36,8 @@ public class MasterActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent i = new Intent(MasterActivity.this, SettingsActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
