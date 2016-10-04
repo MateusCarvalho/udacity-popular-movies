@@ -45,7 +45,7 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
         public ViewHolder(View view) {
             super(view);
             progressBar = (ProgressBar) view.findViewById(R.id.progressImage);
-            title = (TextView) view.findViewById(R.id.titleMovie);
+            //title = (TextView) view.findViewById(R.id.titleMovie);
             thumb = (ImageView) view.findViewById(R.id.thumb);
             view.setOnClickListener(this);
         }
@@ -98,7 +98,7 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
         Movie item = listItens.get(position);
 
         //set data to view
-        holder.title.setText(item.getTitle());
+        //holder.title.setText(item.getTitle());
         //get image
         Picasso.with(mCtx).load(Constants.API_BASE_IMAGES_MOVIEDB+item.getPathThumb()).into(holder.thumb, new Callback() {
             @Override

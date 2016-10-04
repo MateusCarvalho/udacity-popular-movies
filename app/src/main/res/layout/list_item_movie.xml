@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_height="wrap_content">
 
     <ProgressBar
@@ -15,16 +13,10 @@
         android:id="@+id/thumb"
         android:scaleType="fitXY"
         android:src="@mipmap/example"
-        android:layout_width="match_parent"
-        android:layout_height="150dp" />
-
-
-    <TextView
-        android:padding="10dp"
-        android:id="@+id/titleMovie"
-        android:textSize="20sp"
-        android:text="Title here"
+        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -88,7 +89,7 @@ public class MainActivity extends MasterActivity {
             if (list!=null) {
                 if (mAdapter==null) {
                     mAdapter = new AdapterListMovies(list,getBaseContext());
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     mRecyclerView.setAdapter(mAdapter);
