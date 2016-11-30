@@ -14,7 +14,6 @@ import com.mateus.popularmovies.R;
 import com.mateus.popularmovies.main.MasterActivity;
 import com.mateus.popularmovies.main.adapters.AdapterListMovies;
 import com.mateus.popularmovies.main.model.Movie;
-import com.mateus.popularmovies.main.model.MovieResponse;
 import com.mateus.popularmovies.main.rest.APIMovieDB;
 import com.mateus.popularmovies.main.rest.ClientMovieDB;
 import com.mateus.popularmovies.main.utils.Constants;
@@ -65,7 +64,7 @@ public class MainActivity extends MasterActivity {
         @Override
         protected List<Movie> doInBackground(String... params) {
             APIMovieDB apiMovieDb = ClientMovieDB.getInstance().create(APIMovieDB.class);
-            Call<MovieResponse> query = null;
+            Call<Movie.MovieResponse> query = null;
 
             if (params[0].equals(getString(R.string.pref_order_default))) {
               query  = apiMovieDb.getPopularMovies(Constants.APP_ID_MOVIEDB, Constants.DEFAULT_LANGUAGE_MOVIEDB, "1");
@@ -73,7 +72,7 @@ public class MainActivity extends MasterActivity {
                 query = apiMovieDb.getTopRatedMovies(Constants.APP_ID_MOVIEDB, Constants.DEFAULT_LANGUAGE_MOVIEDB, "1");
             }
             try {
-                Response<MovieResponse> response = query.execute();
+                Response<Movie.MovieResponse> response = query.execute();
                 mItens = response.body().results;
             } catch (IOException ex) {
                 ex.printStackTrace();

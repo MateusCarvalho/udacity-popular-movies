@@ -6,11 +6,12 @@ package com.mateus.popularmovies.main.utils;
 public class Constants {
 
     public static String API_BASE_MOVIEDB = "https://api.themoviedb.org/3/movie/";
-    public static String APP_ID_MOVIEDB = "YOUR_APP_ID";
+    public static String APP_ID_MOVIEDB = "APPID";
     public static String DEFAULT_LANGUAGE_MOVIEDB = "pt-BR";
     public static String API_BASE_IMAGES_MOVIEDB = "https://image.tmdb.org/t/p/w500/";
 
 
+    public static String MOVIE_ID = "MOVIE_ID";
     public static String MOVIE_TITLE = "MOVIE_TITLE";
     public static String MOVIE_OVERVIEW = "MOVIE_OVERVIEW";
     public static String MOVIE_IMAGE_PATH = "MOVIE_IMAGE_PATH";

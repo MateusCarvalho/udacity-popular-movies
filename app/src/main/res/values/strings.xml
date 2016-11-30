@@ -7,6 +7,9 @@
     <string name="pref_order_key">order</string>
     <string name="pref_order_default">popular</string>
 
+    <!-- DETAIL MOVIE -->
+    <string name="section_release">Release</string>
+
     <string-array name="pref_order_values">
         <item>Popular</item>
         <item>Rating</item>

@@ -3,6 +3,7 @@ package com.mateus.popularmovies.main.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mateus on 27/09/16.
@@ -21,6 +22,7 @@ public class Movie {
     private Date dateRelease;
     @SerializedName("poster_path")
     private String pathThumb;
+
 
     public Movie(String id, String title, String description, Double voteAverage, Date dateRelease, String pathThumb) {
         this.id = id;
@@ -77,5 +79,13 @@ public class Movie {
 
     public void setPathThumb(String pathThumb) {
         this.pathThumb = pathThumb;
+    }
+
+
+    public class MovieResponse {
+
+        @SerializedName("results")
+        public List<Movie> results;
+
     }
 }

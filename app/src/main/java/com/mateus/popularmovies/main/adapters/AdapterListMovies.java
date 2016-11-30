@@ -62,6 +62,7 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
             String yearMovie = String.valueOf(calendar.get(Calendar.YEAR));
 
             Intent i = new Intent(mCtx, MovieDetailActivity.class);
+            i.putExtra(Constants.MOVIE_ID,temp.getId());
             i.putExtra(Constants.MOVIE_TITLE,temp.getTitle());
             i.putExtra(Constants.MOVIE_OVERVIEW,temp.getDescription());
             i.putExtra(Constants.MOVIE_IMAGE_PATH,temp.getPathThumb());
