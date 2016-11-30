@@ -111,9 +111,11 @@ public class MovieDetailActivity extends MasterActivity {
 
 
                 //set review
-                MovieReviews temp = movie.getReviews().reviews.get(0);
-                authorReview.setText(temp.getAuthor());
-                contentReview.setText(temp.getContent());
+                if (movie.getReviews().reviews!=null && movie.getReviews().reviews.size()>1) {
+                    MovieReviews temp = movie.getReviews().reviews.get(0);
+                    authorReview.setText(temp.getAuthor());
+                    contentReview.setText(temp.getContent());
+                }
             }
 
             super.onPostExecute(aVoid);
