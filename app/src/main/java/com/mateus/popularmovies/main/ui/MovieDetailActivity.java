@@ -9,19 +9,19 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mateus.popularmovies.R;
 import com.mateus.popularmovies.main.MasterActivity;
 import com.mateus.popularmovies.main.model.Movie;
-import com.mateus.popularmovies.main.model.MovieVideos;
+import com.mateus.popularmovies.main.model.MovieReviews;
 import com.mateus.popularmovies.main.rest.APIMovieDB;
 import com.mateus.popularmovies.main.rest.ClientMovieDB;
 import com.mateus.popularmovies.main.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -32,9 +32,10 @@ import retrofit2.Response;
 public class MovieDetailActivity extends MasterActivity {
 
     private ImageView preview;
-    private TextView name, overview, dateReleased, averageUser;
+    private TextView name, overview, dateReleased,authorReview,contentReview;
+    private RatingBar averageUser;
     private ImageButton btTrailler;
-    private List<MovieVideos> movieTraillers;
+    private Movie movie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +47,10 @@ public class MovieDetailActivity extends MasterActivity {
         name = (TextView) findViewById(R.id.title);
         overview = (TextView) findViewById(R.id.overview);
         dateReleased = (TextView) findViewById(R.id.dateReleased);
-        averageUser = (TextView) findViewById(R.id.averageUser);
+        averageUser = (RatingBar) findViewById(R.id.averageUser);
         btTrailler = (ImageButton) findViewById(R.id.btTrailler);
+        contentReview = (TextView) findViewById(R.id.review_content);
+        authorReview = (TextView) findViewById(R.id.author_review);
 
         if (getIntent()!=null){
 
@@ -59,10 +62,15 @@ public class MovieDetailActivity extends MasterActivity {
 
             name.setText(getIntent().getStringExtra(Constants.MOVIE_TITLE));
             overview.setText(getIntent().getStringExtra(Constants.MOVIE_OVERVIEW));
-            averageUser.setText(getIntent().getStringExtra(Constants.MOVIE_AVERAGE_USER)+"/10");
             dateReleased.setText(getIntent().getStringExtra(Constants.MOVIE_DATE_RELEASED));
+
+            //set image from post
             String pathImage = getIntent().getStringExtra(Constants.MOVIE_IMAGE_PATH);
             Picasso.with(getBaseContext()).load(Constants.API_BASE_IMAGES_MOVIEDB+pathImage).into(preview);
+
+            //set average user
+            float average = Float.valueOf(getIntent().getStringExtra(Constants.MOVIE_AVERAGE_USER));
+            averageUser.setRating(average);
         }
 
 
@@ -81,13 +89,13 @@ public class MovieDetailActivity extends MasterActivity {
         protected Void doInBackground(String... params) {
 
             APIMovieDB apiMovieDb = ClientMovieDB.getInstance().create(APIMovieDB.class);
-            Call<MovieVideos.MovieVideosResponse> query = null;
+            Call<Movie> query = null;
 
-            query = apiMovieDb.getVideos(params[0],Constants.APP_ID_MOVIEDB);
+            query = apiMovieDb.getMovie(params[0],Constants.APP_ID_MOVIEDB,"videos,reviews");
 
             try {
-                Response<MovieVideos.MovieVideosResponse> response = query.execute();
-                movieTraillers = response.body().results;
+                Response<Movie> response = query.execute();
+                movie = response.body();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -97,8 +105,15 @@ public class MovieDetailActivity extends MasterActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            if (movieTraillers!=null) {
+            if (movie!=null) {
+                //show bt trailler
                 btTrailler.setVisibility(View.VISIBLE);
+
+
+                //set review
+                MovieReviews temp = movie.getReviews().reviews.get(0);
+                authorReview.setText(temp.getAuthor());
+                contentReview.setText(temp.getContent());
             }
 
             super.onPostExecute(aVoid);
@@ -108,9 +123,8 @@ public class MovieDetailActivity extends MasterActivity {
 
     public void onClickOpenTrailler(View view) {
 
-        if (movieTraillers!=null) {
-            MovieVideos tempVideo = movieTraillers.get(0);
-            watchYoutubeVideo(tempVideo.getKey());
+        if (movie!=null) {
+            watchYoutubeVideo(movie.getVideos().results.get(0).getKey());
         }
     }
 

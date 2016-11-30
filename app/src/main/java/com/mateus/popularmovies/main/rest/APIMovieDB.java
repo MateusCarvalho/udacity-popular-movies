@@ -29,10 +29,11 @@ public interface APIMovieDB {
             @Query("page") String qtd
     );
 
-    @GET("{id}/videos")
-    Call<MovieVideos.MovieVideosResponse> getVideos(
+    @GET("{id}")
+    Call<Movie> getMovie(
             @Path("id") String movieID,
-            @Query("api_key") String apiKey
+            @Query("api_key") String apiKey,
+            @Query("append_to_response") String append
     );
 
 

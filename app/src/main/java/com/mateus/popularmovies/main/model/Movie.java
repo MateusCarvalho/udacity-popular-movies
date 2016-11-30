@@ -22,6 +22,10 @@ public class Movie {
     private Date dateRelease;
     @SerializedName("poster_path")
     private String pathThumb;
+    @SerializedName("videos")
+    MovieVideos.MovieVideosResponse videos;
+    @SerializedName("reviews")
+    MovieReviews.MovieReviewResponse reviews;
 
 
     public Movie(String id, String title, String description, Double voteAverage, Date dateRelease, String pathThumb) {
@@ -81,6 +85,21 @@ public class Movie {
         this.pathThumb = pathThumb;
     }
 
+    public MovieVideos.MovieVideosResponse getVideos() {
+        return videos;
+    }
+
+    public void setVideos(MovieVideos.MovieVideosResponse videos) {
+        this.videos = videos;
+    }
+
+    public MovieReviews.MovieReviewResponse getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(MovieReviews.MovieReviewResponse reviews) {
+        this.reviews = reviews;
+    }
 
     public class MovieResponse {
 
@@ -88,4 +107,6 @@ public class Movie {
         public List<Movie> results;
 
     }
+
+
 }
