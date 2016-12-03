@@ -1,7 +1,9 @@
 package com.mateus.popularmovies.main.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,9 @@ import android.widget.Toast;
 
 import com.mateus.popularmovies.R;
 import com.mateus.popularmovies.main.model.Movie;
+import com.mateus.popularmovies.main.ui.MainActivity;
 import com.mateus.popularmovies.main.ui.MovieDetailActivity;
+import com.mateus.popularmovies.main.ui.fragment.MovieDetailFragment;
 import com.mateus.popularmovies.main.utils.Constants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -31,6 +35,7 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
 
     private static List<Movie> listItens;
     private Context mCtx;
+    private MainActivity mActivity;
 
     @Override
     public void onClick(View v) {
@@ -56,28 +61,33 @@ public class AdapterListMovies extends RecyclerView.Adapter<AdapterListMovies.Vi
             int itemPosition = getAdapterPosition();
             Movie temp = listItens.get(itemPosition);
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(temp.getDateRelease());
+            if (MainActivity.mTwoPane) {
 
-            String yearMovie = String.valueOf(calendar.get(Calendar.YEAR));
+                Bundle args = new Bundle();
+                args.putString(Constants.MOVIE_ID,temp.getId());
 
-            Intent i = new Intent(mCtx, MovieDetailActivity.class);
-            i.putExtra(Constants.MOVIE_ID,temp.getId());
-            i.putExtra(Constants.MOVIE_TITLE,temp.getTitle());
-            i.putExtra(Constants.MOVIE_OVERVIEW,temp.getDescription());
-            i.putExtra(Constants.MOVIE_IMAGE_PATH,temp.getPathThumb());
-            i.putExtra(Constants.MOVIE_DATE_RELEASED,yearMovie);
-            i.putExtra(Constants.MOVIE_AVERAGE_USER,Double.toString(temp.getVoteAverage()));
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mCtx.startActivity(i);
+                MovieDetailFragment fragment = new MovieDetailFragment();
+                fragment.setArguments(args);
+
+                //call method to change fragment
+                mActivity.changeFragment(fragment);
+
+            } else {
+                Intent i = new Intent(mCtx, MovieDetailActivity.class);
+                i.putExtra(Constants.MOVIE_ID,temp.getId());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mCtx.startActivity(i);
+            }
+
         }
     }
 
 
     //create the constructor and force pass the data
-    public AdapterListMovies(List<Movie> listItens,Context ctx) {
+    public AdapterListMovies(List<Movie> listItens,MainActivity ac) {
         this.listItens = listItens;
-        this.mCtx = ctx;
+        this.mCtx = ac.getBaseContext();
+        this.mActivity = ac;
     }
 
     // Create new views (invoked by the layout manager)

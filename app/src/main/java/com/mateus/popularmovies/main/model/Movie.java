@@ -17,7 +17,7 @@ public class Movie {
     @SerializedName("overview")
     private String description;
     @SerializedName("vote_average")
-    private Double voteAverage;
+    private Float voteAverage;
     @SerializedName("release_date")
     private Date dateRelease;
     @SerializedName("poster_path")
@@ -28,7 +28,7 @@ public class Movie {
     MovieReviews.MovieReviewResponse reviews;
 
 
-    public Movie(String id, String title, String description, Double voteAverage, Date dateRelease, String pathThumb) {
+    public Movie(String id, String title, String description, Float voteAverage, Date dateRelease, String pathThumb) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -61,11 +61,11 @@ public class Movie {
         this.description = description;
     }
 
-    public Double getVoteAverage() {
+    public Float getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(Double voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 

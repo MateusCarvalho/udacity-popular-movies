@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,15 +31,26 @@ public class MainActivity extends MasterActivity {
     private RecyclerView mRecyclerView;
     private AdapterListMovies mAdapter;
     private final String TAG = "MainActivity";
+    public static boolean mTwoPane=false;
+    private static final String MOVIE_DETAILS_FRAGMENT_TAG = "fragment_movie_details";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mTwoPane = findViewById(R.id.movie_detail_container) != null;
+        mRecyclerView = (RecyclerView) findViewById(R.id.listMovies);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.listMovies);
+        if (mTwoPane) {
+            if (savedInstanceState == null) {
+                changeFragment(new Fragment());
+            }
+        }
+
 
     }
 
@@ -87,7 +99,7 @@ public class MainActivity extends MasterActivity {
 
             if (list!=null) {
                 if (mAdapter==null) {
-                    mAdapter = new AdapterListMovies(list,getBaseContext());
+                    mAdapter = new AdapterListMovies(list,MainActivity.this);
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -100,5 +112,11 @@ public class MainActivity extends MasterActivity {
         }
 
 
+    }
+
+    public void changeFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.movie_detail_container, fragment, MOVIE_DETAILS_FRAGMENT_TAG)
+                .commit();
     }
 }
