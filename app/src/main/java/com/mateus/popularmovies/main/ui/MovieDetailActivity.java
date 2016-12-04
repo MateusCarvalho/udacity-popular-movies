@@ -47,4 +47,8 @@ public class MovieDetailActivity extends MasterActivity {
         }
 
     }
+
+    public void setTitleActionBar(String title) {
+        mToolbar.setTitle(title);
+    }
 }

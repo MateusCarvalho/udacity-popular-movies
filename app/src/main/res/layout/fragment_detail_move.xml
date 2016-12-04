@@ -51,11 +51,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                     />
 
                 <TextView
                     android:id="@+id/dateReleased"
@@ -92,6 +94,8 @@
             android:orientation="vertical">
 
             <TextView
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginTop="5dp"
                 android:textAppearance="@android:style/TextAppearance.Large"
                 android:text="@string/section_release"
@@ -116,6 +120,8 @@
             android:orientation="vertical">
 
             <TextView
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginTop="5dp"
                 android:textAppearance="@android:style/TextAppearance.Large"
                 android:text="@string/section_reviews"

@@ -57,26 +57,23 @@ public class MovieDetailFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (savedInstanceState==null) {
-            preview = (ImageView) view.findViewById(R.id.imagePreview);
-            name = (TextView) view.findViewById(R.id.title);
-            overview = (TextView) view.findViewById(R.id.overview);
-            btFavorite = (ImageButton) view.findViewById(R.id.btFavorite);
-            dateReleased = (TextView) view.findViewById(R.id.dateReleased);
-            averageUser = (RatingBar) view.findViewById(R.id.averageUser);
-            btTrailler = (ImageButton) view.findViewById(R.id.btTrailler);
-            contentReview = (TextView) view.findViewById(R.id.review_content);
-            authorReview = (TextView) view.findViewById(R.id.author_review);
+        preview = (ImageView) view.findViewById(R.id.imagePreview);
+        name = (TextView) view.findViewById(R.id.title);
+        overview = (TextView) view.findViewById(R.id.overview);
+        btFavorite = (ImageButton) view.findViewById(R.id.btFavorite);
+        dateReleased = (TextView) view.findViewById(R.id.dateReleased);
+        averageUser = (RatingBar) view.findViewById(R.id.averageUser);
+        btTrailler = (ImageButton) view.findViewById(R.id.btTrailler);
+        contentReview = (TextView) view.findViewById(R.id.review_content);
+        authorReview = (TextView) view.findViewById(R.id.author_review);
 
-            Bundle arguments = getArguments();
-            String id = arguments.getString(Constants.MOVIE_ID);
+        Bundle arguments = getArguments();
+        String id = arguments.getString(Constants.MOVIE_ID);
 
-            if (arguments!=null){
-                //query trailler
-                FetchTrailler fetchTrailler = new FetchTrailler();
-                fetchTrailler.execute(id);
-            }
-
+        if (arguments!=null){
+            //query trailler
+            FetchTrailler fetchTrailler = new FetchTrailler();
+            fetchTrailler.execute(id);
         }
 
         btTrailler.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +172,8 @@ public class MovieDetailFragment extends Fragment {
         //set average user
         float average = Float.valueOf(movie.getVoteAverage());
         averageUser.setRating(average);
+
+        ((MovieDetailActivity)getActivity()).setTitle(movie.getTitle());
 
         if (Utility.isFavorited(getActivity(),movie.getId())) {
             btFavorite.setSelected(true);
