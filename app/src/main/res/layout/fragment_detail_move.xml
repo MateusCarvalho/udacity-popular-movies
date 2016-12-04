@@ -71,6 +71,15 @@
                     android:numStars="10"
                     android:isIndicator="false" />
 
+
+                <ImageButton
+                    android:id="@+id/btFavorite"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/selector_bt_favorited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
         </LinearLayout>
 

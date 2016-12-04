@@ -22,6 +22,7 @@ import com.mateus.popularmovies.main.rest.APIMovieDB;
 import com.mateus.popularmovies.main.rest.ClientMovieDB;
 import com.mateus.popularmovies.main.ui.MovieDetailActivity;
 import com.mateus.popularmovies.main.utils.Constants;
+import com.mateus.popularmovies.main.utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class MovieDetailFragment extends Fragment {
     private ImageView preview;
     private TextView name, overview, dateReleased,authorReview,contentReview;
     private RatingBar averageUser;
-    private ImageButton btTrailler;
+    private ImageButton btTrailler,btFavorite;
     private Movie movie;
     private static int DETAIL_FRAGMENT_POSITION_LOAD = 0;
 
@@ -60,6 +61,7 @@ public class MovieDetailFragment extends Fragment {
             preview = (ImageView) view.findViewById(R.id.imagePreview);
             name = (TextView) view.findViewById(R.id.title);
             overview = (TextView) view.findViewById(R.id.overview);
+            btFavorite = (ImageButton) view.findViewById(R.id.btFavorite);
             dateReleased = (TextView) view.findViewById(R.id.dateReleased);
             averageUser = (RatingBar) view.findViewById(R.id.averageUser);
             btTrailler = (ImageButton) view.findViewById(R.id.btTrailler);
@@ -85,6 +87,27 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
         });
+
+
+        btFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (movie==null) {
+                    return ;
+                }
+
+                String id = movie.getId();
+
+                if(!Utility.isFavorited(getActivity(),id)) {
+                    Utility.addFavoriteItem(getActivity(),id);
+                    btFavorite.setSelected(true);
+                } else {
+                    Utility.removeFavoriteItem(getActivity(),id);
+                    btFavorite.setSelected(false);
+                }
+            }
+        });
+
     }
 
 
@@ -152,6 +175,11 @@ public class MovieDetailFragment extends Fragment {
         //set average user
         float average = Float.valueOf(movie.getVoteAverage());
         averageUser.setRating(average);
+
+        if (Utility.isFavorited(getActivity(),movie.getId())) {
+            btFavorite.setSelected(true);
+        }
+
     }
 
     private void watchYoutubeVideo(String id){
