@@ -2,6 +2,7 @@ package com.mateus.popularmovies.main.utils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -44,14 +45,14 @@ public abstract class Utility {
         return null;
     }
     private static boolean putStringInPreferences(Activity activity,String nick,String key){
-        SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, nick);
         editor.commit();
         return true;
     }
     private static String getStringFromPreferences(Activity activity,String defaultValue,String key){
-        SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         String temp = sharedPreferences.getString(key, defaultValue);
         return temp;
     }

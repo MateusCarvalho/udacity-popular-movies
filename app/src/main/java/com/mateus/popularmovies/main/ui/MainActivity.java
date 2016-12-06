@@ -18,8 +18,11 @@ import com.mateus.popularmovies.main.model.Movie;
 import com.mateus.popularmovies.main.rest.APIMovieDB;
 import com.mateus.popularmovies.main.rest.ClientMovieDB;
 import com.mateus.popularmovies.main.utils.Constants;
+import com.mateus.popularmovies.main.utils.Utility;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +36,8 @@ public class MainActivity extends MasterActivity {
     private final String TAG = "MainActivity";
     public static boolean mTwoPane=false;
     private static final String MOVIE_DETAILS_FRAGMENT_TAG = "fragment_movie_details";
+    private  SharedPreferences sharedPreferences;
+    private boolean showOnlyFavorites=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +46,6 @@ public class MainActivity extends MasterActivity {
 
         mTwoPane = findViewById(R.id.movie_detail_container) != null;
         mRecyclerView = (RecyclerView) findViewById(R.id.listMovies);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         if (mTwoPane) {
             if (savedInstanceState == null) {
@@ -54,12 +56,17 @@ public class MainActivity extends MasterActivity {
 
     }
 
+    public boolean isOnlyShowFavorites(){
+        return this.showOnlyFavorites;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String order = sharedPreferences.getString(getString(R.string.pref_order_key),getString(R.string.pref_order_default));
+        showOnlyFavorites = sharedPreferences.getBoolean(getString(R.string.favorites_enabled),false);
 
         new FetchDataMovie().execute(order);
     }
@@ -96,6 +103,18 @@ public class MainActivity extends MasterActivity {
         @Override
         protected void onPostExecute(List<Movie> list) {
             super.onPostExecute(list);
+            if(isOnlyShowFavorites()){
+
+                List<Movie> newList = new ArrayList<Movie>();
+
+                for (Movie temp :list){
+                    if (Utility.isFavorited(MainActivity.this,temp.getId())) {
+                        newList.add(temp);
+                    }
+                }
+
+                list = newList;
+            }
 
             if (list!=null) {
                 if (mAdapter==null) {

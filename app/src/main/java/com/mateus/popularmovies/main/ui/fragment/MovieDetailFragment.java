@@ -16,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mateus.popularmovies.R;
+import com.mateus.popularmovies.main.MasterActivity;
 import com.mateus.popularmovies.main.model.Movie;
 import com.mateus.popularmovies.main.model.MovieReviews;
 import com.mateus.popularmovies.main.rest.APIMovieDB;
@@ -173,7 +174,7 @@ public class MovieDetailFragment extends Fragment {
         float average = Float.valueOf(movie.getVoteAverage());
         averageUser.setRating(average);
 
-        ((MovieDetailActivity)getActivity()).setTitle(movie.getTitle());
+        ((MasterActivity)getActivity()).setTitle(movie.getTitle());
 
         if (Utility.isFavorited(getActivity(),movie.getId())) {
             btFavorite.setSelected(true);

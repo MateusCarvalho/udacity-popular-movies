@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,9 +16,24 @@ import com.mateus.popularmovies.main.ui.SettingsActivity;
  */
 public class MasterActivity extends AppCompatActivity {
 
+    private  Toolbar toolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    public void changeUpIcon(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
     }
 
     @Override
@@ -41,6 +57,10 @@ public class MasterActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setTitleActionBar(String title) {
+        toolbar.setTitle(title);
     }
 
 

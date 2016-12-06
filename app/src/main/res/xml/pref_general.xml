@@ -9,5 +9,11 @@
         android:key="@string/pref_order_key"
         android:title="@string/pref_order_label"></ListPreference>
 
+    <SwitchPreference
+        android:key="@string/favorites_enabled"
+        android:title="Show only Favorites"
+        android:defaultValue="false"></SwitchPreference>
+
+
 
 </PreferenceScreen>

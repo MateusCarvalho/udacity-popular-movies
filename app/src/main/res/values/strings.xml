@@ -11,6 +11,8 @@
     <string name="section_release">Release</string>
     <string name="section_reviews">Reviews</string>
 
+    <string name="favorites_enabled">favorites_enabled</string>
+
     <string-array name="pref_order_values">
         <item>Popular</item>
         <item>Rating</item>

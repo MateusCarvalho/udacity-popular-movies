@@ -15,19 +15,11 @@ import com.mateus.popularmovies.main.utils.Constants;
  */
 public class MovieDetailActivity extends MasterActivity {
 
-    private Toolbar mToolbar;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail_movie);
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
         if (savedInstanceState==null) {
             if (getIntent().hasExtra(Constants.MOVIE_ID)) {
@@ -48,7 +40,10 @@ public class MovieDetailActivity extends MasterActivity {
 
     }
 
-    public void setTitleActionBar(String title) {
-        mToolbar.setTitle(title);
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        changeUpIcon();
     }
 }
